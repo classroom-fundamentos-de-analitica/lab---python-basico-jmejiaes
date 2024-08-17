@@ -185,9 +185,11 @@ def pregunta_05():
                 elif num > diccionario[i][1]:
                     diccionario[i][1] = num
     
+    final = []
+    for i in diccionario:
+        final.append((i[0], i[1], i[2]))
 
-
-    return diccionario
+    return final
 
 
 def pregunta_06():
@@ -223,10 +225,12 @@ def pregunta_06():
 
         for j in range(len(a)): 
             par = a[j].split(':')
+            num = int(par[1])
+
 
             if par[0] in elementos:
                 
-                num = int(par[1])
+                
 
                 if num <= minimos[par[0]]:
                     minimos[par[0]] = num
@@ -236,18 +240,16 @@ def pregunta_06():
 
             else:
                 elementos.add(par[0])
-                minimos[par[0]] = 10000
-                maximos[par[0]] = 0
+                minimos[par[0]] = num
+                maximos[par[0]] = num
 
     elementos = sorted(list(elementos))
     final = []
 
     for i in elementos:
-        final.append((i, minimos[i], maximos[i]))
+        final.append((str(i), minimos[i], maximos[i]))
 
     return final
-
-
 
 def pregunta_07():
     """
@@ -277,7 +279,7 @@ def pregunta_07():
         elementos[i[1]].append(i[0])
 
 
-    return elementos.items()
+    return list(elementos.items())
 
 
 def pregunta_08():
@@ -313,8 +315,7 @@ def pregunta_08():
         i = str(i)
         elementos[i] = list(elementos[i])
 
-    return elementos.items()
-
+    return list(elementos.items())
 
 
 def pregunta_09():
