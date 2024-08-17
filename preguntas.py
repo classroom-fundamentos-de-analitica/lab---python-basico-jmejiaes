@@ -278,9 +278,12 @@ def pregunta_07():
     for i in matriz:
         elementos[i[1]].append(i[0])
 
+    final = []
 
-    return list(elementos.items())
+    for i in list(elementos.items()):
+        final.append((int(i[0]), i[1]))
 
+    return final
 
 def pregunta_08():
     """
@@ -314,8 +317,13 @@ def pregunta_08():
     for i in range(10):
         i = str(i)
         elementos[i] = list(elementos[i])
+    
+    final = []
 
-    return list(elementos.items())
+    for i in list(elementos.items()):
+        final.append((int(i[0]), i[1]))
+
+    return final
 
 
 def pregunta_09():
