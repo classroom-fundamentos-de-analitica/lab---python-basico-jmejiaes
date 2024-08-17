@@ -321,10 +321,9 @@ def pregunta_08():
     final = []
 
     for i in list(elementos.items()):
-        final.append((int(i[0]), i[1]))
+        final.append((int(i[0]), sorted(i[1])))
 
     return final
-
 
 def pregunta_09():
     """
