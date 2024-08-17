@@ -12,6 +12,17 @@ Utilice el archivo `data.csv` para resolver las preguntas.
 
 """
 
+with open('data.csv', 'r') as f:
+    file = f.readlines()
+
+matriz = []
+
+for fila in file:
+    elemento = fila.split('\t')
+    elemento[-1]  = elemento[-1].replace('\n', '')
+    matriz.append(elemento)
+
+
 
 def pregunta_01():
     """
@@ -21,7 +32,13 @@ def pregunta_01():
     214
 
     """
-    return
+    rta = 0
+
+    for i in matriz:
+        rta += int(i[1])
+
+    return rta
+
 
 
 def pregunta_02():
@@ -39,7 +56,22 @@ def pregunta_02():
     ]
 
     """
-    return
+
+    diccionario = dict()
+
+    for fila in matriz:
+        letra = fila[0]
+
+        if letra in diccionario.keys():
+            diccionario[letra] += 1
+
+        else:
+            diccionario[letra] = 1
+
+    diccionario = sorted(diccionario.items())
+
+    return diccionario
+
 
 
 def pregunta_03():
@@ -57,7 +89,21 @@ def pregunta_03():
     ]
 
     """
-    return
+
+    diccionario = dict()
+
+    for fila in matriz:
+        letra = fila[0]
+
+        if letra in diccionario.keys():
+            diccionario[letra] += int(fila[1])
+
+        else:
+            diccionario[letra] = int(fila[1])
+
+    diccionario = sorted(diccionario.items())
+
+    return diccionario
 
 
 def pregunta_04():
@@ -82,7 +128,21 @@ def pregunta_04():
     ]
 
     """
-    return
+
+    diccionario = dict()
+
+    for fila in matriz:
+        letra = fila[2][5:7]
+    
+        if letra in diccionario.keys():
+            diccionario[letra] += 1
+
+        else:
+            diccionario[letra] = 1
+            
+    diccionario = sorted(diccionario.items())
+
+    return diccionario
 
 
 def pregunta_05():
@@ -100,7 +160,34 @@ def pregunta_05():
     ]
 
     """
-    return
+
+    letras = []
+    diccionario = []
+
+    for fila in matriz:
+        letras.append(fila[0])
+
+    letras = sorted(list(set(letras)))
+        
+    for letra in letras:
+        diccionario.append([letra, 0, 10000])
+
+    for elemento in matriz:
+        num = int(elemento[1])
+        letra = elemento[0]
+
+        for i in range(len(diccionario)):
+            if letra == diccionario[i][0]:
+
+                if num < diccionario[i][2]:
+                    diccionario[i][2] = num
+
+                elif num > diccionario[i][1]:
+                    diccionario[i][1] = num
+    
+
+
+    return diccionario
 
 
 def pregunta_06():
@@ -125,7 +212,41 @@ def pregunta_06():
     ]
 
     """
-    return
+    
+    minimos = dict()
+    maximos = dict()
+    elementos = set()
+
+    for elemento in matriz:
+        
+        a = elemento[-1].split(',')
+
+        for j in range(len(a)): 
+            par = a[j].split(':')
+
+            if par[0] in elementos:
+                
+                num = int(par[1])
+
+                if num <= minimos[par[0]]:
+                    minimos[par[0]] = num
+
+                if num >= maximos[par[0]]:
+                    maximos[par[0]] = num
+
+            else:
+                elementos.add(par[0])
+                minimos[par[0]] = 10000
+                maximos[par[0]] = 0
+
+    elementos = sorted(list(elementos))
+    final = []
+
+    for i in elementos:
+        final.append((i, minimos[i], maximos[i]))
+
+    return final
+
 
 
 def pregunta_07():
@@ -149,7 +270,14 @@ def pregunta_07():
     ]
 
     """
-    return
+
+    elementos = {str(l) : [] for l in range(10)}
+
+    for i in matriz:
+        elementos[i[1]].append(i[0])
+
+
+    return elementos.items()
 
 
 def pregunta_08():
@@ -174,7 +302,19 @@ def pregunta_08():
     ]
 
     """
-    return
+
+
+    elementos = {str(l) : set() for l in range(10)}
+
+    for i in matriz:
+        elementos[i[1]].add(i[0])
+
+    for i in range(10):
+        i = str(i)
+        elementos[i] = list(elementos[i])
+
+    return elementos.items()
+
 
 
 def pregunta_09():
@@ -197,7 +337,24 @@ def pregunta_09():
     }
 
     """
-    return
+
+    cantidad = dict()
+
+    for elemento in matriz:
+
+        lista = elemento[-1].split(',')
+
+        for par in lista:
+
+            e = par[0]*3
+            if e in cantidad:
+                cantidad[e] += 1
+            else:
+                cantidad[e] = 1
+
+
+    return dict(sorted(cantidad.items()))
+
 
 
 def pregunta_10():
@@ -218,7 +375,14 @@ def pregunta_10():
 
 
     """
-    return
+
+    final = []
+    for i in matriz:
+        final.append((i[0], len(i[-2].split(',')), len(i[-1].split(','))))
+
+    return final
+
+
 
 
 def pregunta_11():
@@ -239,7 +403,25 @@ def pregunta_11():
 
 
     """
-    return
+
+
+    diccionario = dict()
+
+    for fila in matriz:
+
+        for letra in fila[3].split(','):
+    
+            if letra in diccionario.keys():
+                diccionario[letra] += int(fila[1])
+
+            else:
+                diccionario[letra] = int(fila[1])
+
+    diccionario = dict(sorted(diccionario.items()))
+
+    return diccionario
+
+
 
 
 def pregunta_12():
@@ -257,4 +439,16 @@ def pregunta_12():
     }
 
     """
-    return
+    final = dict()
+
+    for fila in matriz:
+        suma = sum([int(y.split(':')[1]) for y in fila[-1].split(',')])
+        letra = fila[0]
+
+        if letra in final:
+            final[letra] += suma
+        
+        else:
+            final[letra] = suma
+
+    return dict(sorted(final.items()))
